@@ -1,0 +1,195 @@
+This file serves as supporting documentation for the two-stage AICc model selection Lesser Yellowlegs body mass analysis. 
+
+Date Created: 2024-10-21
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Data Exploration and Model Assumptions
+
+Data: Lesser Yellowlegs (n = 54)
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Analysis: Two-stage AICc Model Selection
+Species: Lesser Yellowlegs
+Response Variable: Mass 
+
+*First Stage Output:
+
+*Informed null model: Mass ~ Year (m1) (K = 4, AICc = 435, Delta AICc = 0.00, AICcWt = 0.30, Cum. Wt = 0.30, LL = -213)
+
+*Model selection based on AICc (shortened):
+
+                    K AICc Delta_AICc AICcWt Cum.Wt   LL
+m1                  4  435       0.00   0.30   0.30 -213
+m18                 7  437       2.18   0.10   0.40 -210
+m6                  5  437       2.18   0.10   0.51 -213
+m8                  5  437       2.35   0.09   0.60 -213
+m7                  5  437       2.38   0.09   0.69 -213
+m17                 7  438       3.48   0.05   0.74 -211
+.
+.
+.
+
+*Top Model Summary: Mass ~ Year (m1)
+
+     Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)   102.01       3.57   28.57 4.80e-33  94.8 109.18
+Year2022       -7.92       5.27   -1.50 1.40e-01 -18.5   2.67
+Year2023      -16.82       4.28   -3.93 2.53e-04 -25.4  -8.24
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (no log transformation of Concentration):
+
+*Model selection based on AICc (shortened):
+
+                      K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.informednull        4  435       0.00   0.35   0.35 -213
+m2                    5  437       2.43   0.10   0.45 -213
+m65                   5  437       2.43   0.10   0.55 -213
+m7                    6  440       4.72   0.03   0.59 -213
+m9                    6  440       4.88   0.03   0.62 -213
+m8                    6  440       4.91   0.03   0.64 -213
+m67                   8  440       4.94   0.03   0.67 -210
+m.globalinformednull  7  440       4.94   0.03   0.70 -212
+m17                   7  440       4.94   0.03   0.73 -212
+m106                  9  440       5.51   0.02   0.75 -209
+.
+.
+.
+
+
+*Top Model Summaries: 
+
+1. Mass ~ Year (m.informed null)
+
+            Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)   102.01       3.57   28.57 4.80e-33  94.8 109.18
+Year2022       -7.92       5.27   -1.50 1.40e-01 -18.5   2.67
+Year2023      -16.82       4.28   -3.93 2.53e-04 -25.4  -8.24
+
+2. Mass ~ OverallNeonic + Year (m2)
+
+              Estimate Std. Error t value Pr(>|t|)   2.5 %  97.5 %
+(Intercept)   102.0084      3.607  28.284 2.00e-32  94.764 109.252
+OverallNeonic  -0.0035      0.195  -0.018 9.86e-01  -0.395   0.388
+Year2022       -7.8791      5.725  -1.376 1.75e-01 -19.379   3.621
+Year2023      -16.8178      4.318  -3.895 2.92e-04 -25.490  -8.146 
+
+Conclusion: Informed null model (Mass ~ Year) came out as the top model. Neonicotinoid concentrations do not further explain any variation in mass beyond year. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (log transformation of Concentration)
+
+*Model selection based on AICc (shortened):
+
+                      K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.informednull        4  435       0.00   0.32   0.32 -213
+m2                    5  437       1.82   0.13   0.45 -213
+m7                    6  439       4.18   0.04   0.62 -213
+m9                    6  439       4.26   0.04   0.65 -213
+m8                    6  439       4.30   0.04   0.69 -213
+m67                   8  439       4.54   0.03   0.72 -210
+m.globalinformednull  7  440       5.32   0.02   0.75 -212
+
+*Top Model Summaries
+
+1. Mass ~ Year (m.informed null)
+
+            Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)   102.01       3.57   28.57 4.80e-33  94.8 109.18
+Year2022       -7.92       5.27   -1.50 1.40e-01 -18.5   2.67
+Year2023      -16.82       4.28   -3.93 2.53e-04 -25.4  -8.24
+
+2. Mass ~ Log10(Neonic) + Year (m2)
+
+              Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)                   104.090       4.53  22.998 3.01e-28  95.00 113.18
+log10(OverallNeonic + 1e-04)    0.891       1.18   0.754 4.54e-01  -1.48   3.27
+Year2022                      -10.492       6.30  -1.665 1.02e-01 -23.15   2.17
+Year2023                      -16.025       4.42  -3.625 6.76e-04 -24.90  -7.15
+
+Conclusion: Informed null model (Mass ~ Year) came out as the top model. Log10(Neonicotinoid concentrations) does not further explain any variation in mass beyond year. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (Concentration as Detection)
+
+*Model selection based on AICc (shortened):
+
+                      K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.informednull        4  435       0.00   0.29   0.29 -213
+m2                    5  437       2.10   0.10   0.39 -213
+m.globalinformednull  6  438       3.48   0.05   0.54 -212
+m17                   6  438       3.48   0.05   0.59 -212
+.
+.
+.
+
+*Top Model Summaries
+
+1. Mass ~ Year (m.informed null)
+
+            Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)   102.01       3.57   28.57 4.80e-33  94.8 109.18
+Year2022       -7.92       5.27   -1.50 1.40e-01 -18.5   2.67
+Year2023      -16.82       4.28   -3.93 2.53e-04 -25.4  -8.24
+
+2. Mass ~ Detection + Year (m2)
+
+                       Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)              103.38       4.36  23.721 7.27e-29  94.6 112.13
+DetectionNon-detection    -2.54       4.57  -0.556 5.81e-01 -11.7   6.65
+Year2022                  -9.29       5.85  -1.586 1.19e-01 -21.0   2.47
+Year2023                 -16.15       4.47  -3.616 6.96e-04 -25.1  -7.18
+
+Conclusion: Informed null model (Mass ~ Year) came out as the top model. Detection of neonicotinoids does not further explain any variation in mass beyond year.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Model Comparisons (m2): 1. Mass ~ Concentration + Year (m.c), vs 2. Mass ~ Log10(Concentration) + Year (m.l), vs 3. Mass ~ Detection + Year (m.d)
+
+*Model selection based on AICc:
+
+               K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.informednull 4  435       0.00   0.49   0.49 -213
+m.l            5  437       1.82   0.20   0.68 -213
+m.d            5  437       2.10   0.17   0.85 -213
+m.c            5  437       2.43   0.14   1.00 -213
+m.null         2  445      10.35   0.00   1.00 -221
+
+*Top Model Summaries
+
+1. Mass ~ Log10(Concentration) + Year
+
+                             Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)                   104.090       4.53  22.998 3.01e-28  95.00 113.18
+log10(OverallNeonic + 1e-04)    0.891       1.18   0.754 4.54e-01  -1.48   3.27
+Year2022                      -10.492       6.30  -1.665 1.02e-01 -23.15   2.17
+Year2023                      -16.025       4.42  -3.625 6.76e-04 -24.90  -7.15
+
+2. Mass ~ Detection + Year
+
+                       Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)              103.38       4.36  23.721 7.27e-29  94.6 112.13
+DetectionNon-detection    -2.54       4.57  -0.556 5.81e-01 -11.7   6.65
+Year2022                  -9.29       5.85  -1.586 1.19e-01 -21.0   2.47
+Year2023                 -16.15       4.47  -3.616 6.96e-04 -25.1  -7.18
+
+3. Mass ~ Concentration + Year (m.c)
+
+              Estimate Std. Error t value Pr(>|t|)   2.5 %  97.5 %
+(Intercept)   102.0084      3.607  28.284 2.00e-32  94.764 109.252
+OverallNeonic  -0.0035      0.195  -0.018 9.86e-01  -0.395   0.388
+Year2022       -7.8791      5.725  -1.376 1.75e-01 -19.379   3.621
+Year2023      -16.8178      4.318  -3.895 2.92e-04 -25.490  -8.146
+
+Conclusion: All three models performed similarly and received similar support (AICc [1.82 - 2.43]). Concentrations, log(concentrations), and detections do not significantly impact mass beyond year.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+

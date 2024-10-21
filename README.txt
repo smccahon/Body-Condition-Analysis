@@ -33,3 +33,6 @@ I used a two-stage AICc model selection approach to determine if neonicotinoid c
 
 -------------------------
 
+Conclusions:
+
+1. Lesser Yellowlegs (Mass ~ Neonicotinoid): Concentrations, log(concentrations), and detections do not significantly impact body mass beyond year. Lesser Yellowlegs in 2023 had significantly lower body mass. 
