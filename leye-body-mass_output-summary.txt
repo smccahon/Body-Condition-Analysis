@@ -8,6 +8,8 @@ Data Exploration and Model Assumptions
 
 Data: Lesser Yellowlegs (n = 54)
 
+**No severe violations of normality, homoscedasticity, independence of errors/observations, or zero expectations of errors (residuals).
+**Concentrations are not normally distributed. Doesn't impact model assumptions, but inferences are limited. Try log transforming concentrations to spread data out.
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -191,5 +193,6 @@ Conclusion: All three models performed similarly and received similar support (A
 
 --------------------------------------------------------------------------------------------------------------------------
 
-
-
+**Notes: 
+1. Log transformation does not adequately address the non-normal distribution of concentrations. 
+2. Use the model with detections, particularly because it performed just as similarly and makes more sense biologically. Concentrations can rapidly metabolize within a few hours.

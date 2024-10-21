@@ -1,0 +1,277 @@
+This file serves as supporting documentation for the two-stage AICc model selection Least Sandpiper body mass analysis. 
+
+Date Created: 2024-10-21
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Data Exploration and Model Assumptions
+
+Data: Least Sandpiper (n = 29)
+
+**No severe violations of normality, homoscedasticity, independence of errors/observations, or zero expectations of errors (residuals).
+**Concentrations are not normally distributed. Doesn't impact model assumptions, but inferences are limited. Try log transforming concentrations to spread data out.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Analysis: Two-stage AICc Model Selection
+Species: Least Sandpiper
+Response Variable: Mass 
+
+*First Stage Output:
+
+*Model selection based on AICc (full):
+
+         K   AICc Delta_AICc AICcWt Cum.Wt     LL
+m4       4 157.88       0.00   0.46   0.46 -74.11
+m.global 5 158.53       0.65   0.33   0.79 -72.96
+m3       3 161.17       3.29   0.09   0.88 -77.10
+m.null   2 161.48       3.60   0.08   0.95 -78.51
+m2       3 163.58       5.70   0.03   0.98 -78.31
+m1       3 163.96       6.08   0.02   1.00 -78.50
+
+*Top Model Summaries:
+
+1. Mass ~ Season + MigDate (m4) <- INFORMED NULL MODEL
+
+             Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)     9.400     3.2235    2.92  0.00721 2.7743   16.0
+SeasonSpring    5.821     2.3816    2.44  0.02162 0.9250   10.7
+MigDate         0.179     0.0589    3.03  0.00544 0.0576    0.3
+
+2. Mass ~ Season * MigDate (m.global)
+
+                     Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)            10.075     3.1950   3.153  0.00417   3.4947 16.655
+SeasonSpring           -6.888     9.1722  -0.751  0.45968 -25.7788 12.002
+MigDate                 0.166     0.0585   2.842  0.00879   0.0457  0.287
+SeasonSpring:MigDate    0.556     0.3877   1.433  0.16431  -0.2430  1.354
+
+Conclusion: 
+1. On average, birds in the spring had significantly higher body mass compared to birds in the fall (m4). 
+2. For each additional day into the migration season, body mass increases significantly (m4).
+3. The effect of migration date on body mass does not significantly differ between spring and fall. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (no log transformation of Concentration): 
+
+*Model selection based on AICc (full):
+
+                     K AICc Delta_AICc AICcWt Cum.Wt    LL
+m4                   4  157       0.00   0.16   0.16 -73.6
+m8                   5  157       0.35   0.14   0.30 -72.3
+m5                   5  158       0.70   0.11   0.41 -72.5
+m.informednull       4  158       1.07   0.10   0.51 -74.1
+m10                  6  158       1.39   0.08   0.59 -71.2
+m9                   6  158       1.45   0.08   0.67 -71.2
+m7                   5  159       2.12   0.06   0.73 -73.2
+m1                   3  159       2.55   0.05   0.77 -76.2
+m3                   4  160       2.79   0.04   0.81 -75.0
+m6                   5  160       2.84   0.04   0.85 -73.5
+m13                  7  160       2.98   0.04   0.89 -70.2
+m12                  7  160       3.06   0.04   0.92 -70.3
+m11                  6  161       3.91   0.02   0.95 -72.5
+m2                   4  161       4.45   0.02   0.96 -75.8
+m.null               2  161       4.67   0.02   0.98 -78.5
+m.globalinformednull 7  162       4.83   0.01   0.99 -71.2
+m.globalseason       8  164       6.80   0.01   1.00 -70.2
+
+*Top Model Summaries:
+
+1. Mass ~ OverallNeonic + MigDate (m4)
+
+              Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)    14.5029     1.8900    7.67 3.83e-08 10.61804 18.388
+OverallNeonic   0.9343     0.3488    2.68 1.27e-02  0.21728  1.651
+MigDate         0.0846     0.0372    2.27 3.15e-02  0.00812  0.161
+
+
+2. Mass ~ OverallNeonic * MigDate (m8)
+
+                      Estimate Std. Error t value Pr(>|t|)   2.5 % 97.5 %
+(Intercept)            15.5504     1.9663    7.91 2.90e-08 11.5008 19.600
+OverallNeonic          -0.2440     0.8422   -0.29 7.74e-01 -1.9785  1.491
+MigDate                 0.0603     0.0396    1.52 1.41e-01 -0.0213  0.142
+OverallNeonic:MigDate   0.0354     0.0231    1.53 1.39e-01 -0.0123  0.083
+
+3. Mass ~ OverallNeonic + Season + MigDate (m5)
+
+              Estimate Std. Error t value Pr(>|t|)   2.5 % 97.5 %
+(Intercept)     10.796     3.2073    3.37  0.00247  4.1908 17.402
+OverallNeonic    0.675     0.3882    1.74  0.09450 -0.1248  1.474
+SeasonSpring     3.686     2.6022    1.42  0.16898 -1.6734  9.045
+MigDate          0.150     0.0591    2.55  0.01745  0.0287  0.272
+
+4. Mass ~ Season + MigDate (m.informednull)
+
+             Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)     9.400     3.2235    2.92  0.00721 2.7743   16.0
+SeasonSpring    5.821     2.3816    2.44  0.02162 0.9250   10.7
+MigDate         0.179     0.0589    3.03  0.00544 0.0576    0.3
+
+
+Conclusions:
+1. There is a positive association between neonicotinoid concentration and body mass (m4).
+2. Each additional day into migration is associated with an increase in body mass (m4, m5, m.informednull).
+3. The effect of migration date on mass does not vary with neonicotinoid concentration (m8).
+4. Birds are heavier in the spring compared to the fall (m.informednull). 
+
+**Q: Why is there a positive association between neonicotinoid concentrations and body mass? What do these birds with detections and high concentrations have in common? 
+**A: There are only four birds with detections. Two are from spring (semipermanent wetland, Virgil site [77% ag]) and two are from fall (temporary wetland, Glinz [54% ag] and Muske [46% ag]). All are from 2023 and are male. 
+**A: This positive association is likely due to small sample size. One bird with a concentration of 0.6 ug/L had significantly lower body mass (19g) than a bird with a concentration of 3.4 ug/L (28g)
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (log transformation of Concentration)
+
+*Model selection based on AICc (full):
+
+                     K AICc Delta_AICc AICcWt Cum.Wt    LL
+m4                   4  155       0.00   0.26   0.26 -72.7
+m5                   5  156       1.08   0.15   0.41 -71.8
+m1                   3  156       1.32   0.13   0.55 -74.7
+m3                   4  157       2.10   0.09   0.64 -73.7
+m.informednull       4  158       2.85   0.06   0.70 -74.1
+m8                   5  158       2.91   0.06   0.76 -72.7
+m2                   4  158       3.33   0.05   0.81 -74.3
+m10                  6  159       4.13   0.03   0.84 -71.7
+m9                   6  159       4.28   0.03   0.87 -71.7
+m11                  6  159       4.28   0.03   0.90 -71.8
+m13                  7  160       4.80   0.02   0.93 -70.2
+m7                   5  160       4.98   0.02   0.95 -73.7
+m.globalinformednull 7  160       5.43   0.02   0.97 -70.6
+m6                   5  161       6.09   0.01   0.98 -74.3
+m.null               2  161       6.45   0.01   0.99 -78.5
+m12                  7  162       7.16   0.01   1.00 -71.4
+m.globalseason       8  164       8.60   0.00   1.00 -70.2
+
+*Top Model Summaries:
+
+1. Mass ~ Log(Neonic) + MigDate (m4)
+
+                             Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)                     19.60     2.1557    9.09 1.48e-09 15.16742 24.030
+log10(OverallNeonic + 1e-04)     1.15     0.3767    3.05 5.26e-03  0.37311  1.922
+MigDate                          0.07     0.0356    1.97 5.98e-02 -0.00311  0.143
+
+2. Mass ~ Log(Neonic) + Season + MigDate (m5)
+
+                             Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)                    15.122     4.0739    3.71  0.00103  6.73182 23.512
+log10(OverallNeonic + 1e-04)    0.889     0.4228    2.10  0.04583  0.01779  1.759
+SeasonSpring                    3.280     2.5446    1.29  0.20926 -1.96124  8.520
+MigDate                         0.132     0.0597    2.21  0.03614  0.00925  0.255
+
+3. Mass ~ Log(Neonic) (m1)
+
+                             Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)                     22.82      1.474   15.48 5.96e-15 19.798  25.85
+log10(OverallNeonic + 1e-04)     1.13      0.396    2.85 8.27e-03  0.316   1.94
+
+Conclusions:
+1. There is a positive association between body mass and log of neonicotinoid concentration (m1, m5, m4). 
+2. There is a positive association between body mass and date into migration season (m5).
+
+**The positive associations of neonic and body mass is likely due to small sample size. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (Concentrations as Detections)
+
+Model selection based on AICc (full):
+
+                     K AICc Delta_AICc AICcWt Cum.Wt    LL
+m4                   4  156       0.00   0.23   0.23 -73.0
+m5                   5  157       0.81   0.16   0.39 -72.0
+m1                   3  157       0.94   0.15   0.53 -74.9
+m3                   4  158       2.05   0.08   0.62 -74.1
+m.informednull       4  158       2.14   0.08   0.70 -74.1
+m8                   5  159       2.94   0.05   0.75 -73.0
+m2                   4  159       3.15   0.05   0.80 -74.6
+m11                  6  160       3.94   0.03   0.83 -71.9
+m9                   6  160       3.98   0.03   0.86 -72.0
+m10                  6  160       3.98   0.03   0.90 -72.0
+m13                  7  160       4.35   0.03   0.92 -70.4
+m.globalinformednull 7  160       4.62   0.02   0.95 -70.5
+m7                   5  161       4.99   0.02   0.96 -74.1
+m.null               2  161       5.74   0.01   0.98 -78.5
+m6                   5  162       6.08   0.01   0.99 -74.6
+m12                  7  163       7.14   0.01   1.00 -71.8
+m.globalseason       8  164       8.10   0.00   1.00 -70.3
+
+*Top Model Summaries
+
+1. Mass ~ Detection + MigDate (m4)
+
+                       Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)             20.1170      2.318    8.68 3.72e-09 15.35189 24.882
+DetectionNon-detection  -4.9563      1.708   -2.90 7.45e-03 -8.46674 -1.446
+MigDate                  0.0672      0.036    1.87 7.31e-02 -0.00676  0.141
+
+2. Mass ~ Detection + Season + MigDate (m5)
+
+                       Estimate Std. Error t value Pr(>|t|)   2.5 % 97.5 %
+(Intercept)              15.209     4.2223    3.60  0.00137  6.5127 23.905
+DetectionNon-detection   -3.762     1.8885   -1.99  0.05739 -7.6514  0.127
+SeasonSpring              3.505     2.5382    1.38  0.17955 -1.7227  8.732
+MigDate                   0.134     0.0601    2.23  0.03465  0.0105  0.258
+
+3. Mass ~ Detection (m1)
+
+                       Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)               23.27       1.66   14.05 6.25e-14 19.87   26.7
+DetectionNon-detection    -4.96       1.78   -2.78 9.81e-03 -8.62   -1.3
+
+Conclusions:
+1. Birds with detections had significantly higher body mass (m1, m4).
+2. Birds with later migration dates had significantly higher body mass (m5).
+
+**There were only four birds with detections. Positive association is likely due to small sample size. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Model Comparisons: 1. Mass ~ Concentration (m.c), vs 2. Mass ~ Log10(Concentration) (m.l), vs 3. Mass ~ Detection (m.d)
+
+*Model selection based on AICc:
+
+               K AICc Delta_AICc AICcWt Cum.Wt    LL
+m.l            3  156       0.00   0.38   0.38 -74.7
+m.d            3  157       0.34   0.32   0.71 -74.9
+m.informednull 4  158       1.53   0.18   0.89 -74.1
+m.c            3  159       3.01   0.08   0.97 -76.2
+m.null         2  161       5.13   0.03   1.00 -78.5
+
+*Top Model Summaries:
+
+1. Mass ~ Concentration
+
+              Estimate Std. Error t value Pr(>|t|)   2.5 % 97.5 %
+(Intercept)     18.554      0.677   27.41 3.03e-21 17.1655  19.94
+OverallNeonic    0.796      0.369    2.16 4.00e-02  0.0391   1.55
+
+2. Mass ~ Detection
+
+                       Estimate Std. Error t value Pr(>|t|) 2.5 % 97.5 %
+(Intercept)               23.27       1.66   14.05 6.25e-14 19.87   26.7
+DetectionNon-detection    -4.96       1.78   -2.78 9.81e-03 -8.62   -1.3
+
+3. Mass ~ Log(Concentration)
+
+                             Estimate Std. Error t value Pr(>|t|)  2.5 % 97.5 %
+(Intercept)                     22.82      1.474   15.48 5.96e-15 19.798  25.85
+log10(OverallNeonic + 1e-04)     1.13      0.396    2.85 8.27e-03  0.316   1.94
+
+
+Conclusion: 
+1. Log(Neonic) and Detection models received similar support (AICc [0.00 - 0.34]). Use model with detections as that makes more sense biologically. 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
