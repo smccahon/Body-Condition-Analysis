@@ -469,3 +469,25 @@ cbind(summary(m.d)$coefficients, confint(m.d))
 # 2. Use model with detections as that makes more sense biologically. 
 
 # ----------------------------------------------------------------------------- #
+
+# Assessing difference in body mass between birds with and without detections ####
+
+## Check normality distribution (t-test vs. Mann-Whitney) ####
+
+# Q-Q plot
+m <- lm(Mass ~ Detection, data = lesa)
+qqnorm(residuals(m))
+qqline(residuals(m), col = "red")
+
+# histogram of residuals
+hist(residuals(m), breaks = 20, main = "Histogram of Residuals", xlab = "Residuals")
+
+# formal test
+shapiro.test(residuals(m)) # residuals not likely to be normally distributed
+
+## Mann-Whitney U Test ####
+# Does not assume normality
+
+wilcox.test(Mass ~ Detection, data = lesa)
+
+# ----------------------------------------------------------------------------- #

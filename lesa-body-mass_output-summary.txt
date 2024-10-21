@@ -267,6 +267,13 @@ Conclusion:
 
 --------------------------------------------------------------------------------------------------------------------------
 
+*Assess difference in body mass between birds with and without detections
+
+*Normality assumption: residuals (Mass ~ Detection) are not normally distributed; therefore we must use a Mann-Whitney U Test to determine if there is a difference in ranks.
+
+*Input: wilcox.test(Mass ~ Detection, data = lesa)
+*Output: W = 90, p-value = 0.01
+
 
 
 
