@@ -269,9 +269,102 @@ MigDate:SexM                         -0.22823     0.0885   -2.58 0.013530 -0.406
 
 *Conclusions:
 1. Body mass is positively associated with log(neonicotinoid) (m107, m163, m130, m175, m83, m161, m17).
-2. Males have significantly higher body mass (m107, m ).
-3. Migration date is positively associated with body mass (m107, ).
+
+*Some other conclusions not related to neonics (shortened):
+2. Males have significantly higher body mass (m107, m294).
+3. Migration date is positively associated with body mass (m107, m294, m17).
 4. Semipalmated Sandpipers have significantly higher body mass than least sandpipers (all models).
+5. The effect of migration date on mass differs by sex (higher in males) (mm107, m163, m294 but negative).
 
 
 --------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (Concentration as Detection)
+
+*Model selection based on AICc (shortened):
+
+                      K AICc Delta_AICc AICcWt Cum.Wt   LL
+m175                  9  284       0.00   0.05   0.05 -131
+m130                  8  285       0.93   0.03   0.09 -133
+m107                  7  285       0.96   0.03   0.12 -134
+m163                  7  285       0.96   0.03   0.15 -134
+m83                   7  285       1.42   0.03   0.18 -134
+m161                  7  285       1.42   0.03   0.20 -134
+m238                  9  285       1.54   0.02   0.23 -131
+m17                   5  286       1.99   0.02   0.25 -137
+m210                  8  286       2.03   0.02   0.27 -133
+.
+.
+.
+
+
+*Top model summaries:
+
+1. Mass ~ Detection + Sex * Season + Sex * Species + Season * MigDate (m175)
+
+
+                             Estimate Std. Error t value Pr(>|t|)   2.5 %  97.5 %
+(Intercept)                    17.443      3.863   4.516 5.25e-05  9.6419 25.2448
+DetectionNon-detection         -3.485      1.616  -2.156 3.70e-02 -6.7492 -0.2212
+SexM                           -3.995      2.306  -1.732 9.07e-02 -8.6527  0.6622
+SeasonSpring                    2.380      4.632   0.514 6.10e-01 -6.9732 11.7339
+SpeciesSemipalmatedSandpiper    4.232      1.717   2.465 1.80e-02  0.7655  7.6993
+MigDate                         0.163      0.058   2.811 7.55e-03  0.0459  0.2800
+SexM:SeasonSpring               9.228      2.898   3.184 2.77e-03  3.3744 15.0808
+SeasonSpring:MigDate           -0.326      0.176  -1.854 7.09e-02 -0.6818  0.0291
+
+2. Mass ~ Detection + Sex * Season + Species + MigDate (m130)
+
+                             Estimate Std. Error t value Pr(>|t|)    2.5 % 97.5 %
+(Intercept)                    18.258     3.9478    4.62 3.56e-05  10.2908 26.225
+DetectionNon-detection         -3.923     1.6446   -2.39 2.17e-02  -7.2419 -0.604
+SexM                           -2.675     2.2564   -1.19 2.42e-01  -7.2287  1.878
+SeasonSpring                   -4.318     2.9817   -1.45 1.55e-01 -10.3357  1.699
+SpeciesSemipalmatedSandpiper    5.262     1.6710    3.15 3.01e-03   1.8896  8.634
+MigDate                         0.127     0.0563    2.26 2.89e-02   0.0137  0.241
+SexM:SeasonSpring               8.293     2.9358    2.82 7.21e-03   2.3685 14.218
+
+
+3. Mass ~ Detection + (Sex * MigDate) + Species (m107)
+
+                             Estimate Std. Error t value Pr(>|t|)   2.5 %  97.5 %
+(Intercept)                    12.757     3.1113    4.10  0.00018  6.4820 19.0312
+DetectionNon-detection         -3.950     1.5322   -2.58  0.01344 -7.0404 -0.8604
+SexM                            7.621     3.2672    2.33  0.02442  1.0319 14.2098
+MigDate                         0.253     0.0834    3.04  0.00404  0.0851  0.4213
+SpeciesSemipalmatedSandpiper    5.194     1.7055    3.05  0.00396  1.7541  8.6330
+SexM:MigDate                   -0.210     0.0897   -2.34  0.02396 -0.3910 -0.0291
+
+4. Mass ~ Detection + Sex * Species + Sex * MigDate (m163)
+
+                             Estimate Std. Error t value Pr(>|t|)   2.5 %  97.5 %
+(Intercept)                    12.757     3.1113    4.10  0.00018  6.4820 19.0312
+DetectionNon-detection         -3.950     1.5322   -2.58  0.01344 -7.0404 -0.8604
+SexM                            7.621     3.2672    2.33  0.02442  1.0319 14.2098
+SpeciesSemipalmatedSandpiper    5.194     1.7055    3.05  0.00396  1.7541  8.6330
+MigDate                         0.253     0.0834    3.04  0.00404  0.0851  0.4213
+SexM:MigDate                   -0.210     0.0897   -2.34  0.02396 -0.3910 -0.0291
+
+
+
+*Conclusions relevant to neonics:
+
+1. Birds with detections had significantly lower body mass (m175, m130, m107, m163)...opposite result from other models where neonic is continuous.
+
+ 
+--------------------------------------------------------------------------------------------------------------------------
+
+*Model Comparisons: 1. Mass ~ Concentration (m.c), vs 2. Mass ~ Log10(Concentration) (m.l), vs 3. Mass ~ Detection (m.d)
+
+*Model selection based on AICc:
+
+       K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.l    3  294       0.00   0.43   0.43 -144
+m.d    3  295       1.00   0.26   0.69 -144
+m.c    3  296       1.43   0.21   0.90 -145
+m.null 2  297       2.85   0.10   1.00 -146
+
+*Conclusions: Model with detections suggest birds with detections (n = 11) have significantly lower body mass. Models with neonicotinoids as a continuous variable suggest birds with higher neonicotinoid concentrations have significantly higher body mass...Conflicting results. Explore other data. 
+
+
+

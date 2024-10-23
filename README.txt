@@ -16,7 +16,7 @@ Species/group and sample size:
 1. Lesser Yellowlegs (n = 54)
 2. Least Sandpiper (n = 29)
 3. Semipalmated Sandpiper (n = 20)
-4. Calidris sp. (Least Sandpipers, Semipalmated Sandpipers, n = 49)
+4. Small Sandpipers (Least Sandpipers, Semipalmated Sandpipers, n = 49)
 5. Killdeer (n = )
 6. Pectoral Sandpiper (n = )
 7. Tringa sp. (Lesser Yellowlegs and Willet, n = )
@@ -38,5 +38,6 @@ Conclusions:
 1. Lesser Yellowlegs (Mass ~ Neonicotinoid): Neonicotinoids (raw concentrations, log transformations, and detections) do not significantly impact body mass. Year is the only variable that had a significant impact on Lesser Yellowlegs body mass. Lesser Yellowlegs in 2023 had significantly lower body mass compared to birds in 2021. 
 2. Least Sandpipers (Mass ~ Neonicotinoid): Birds with neonicotinoid detections (and higher concentrations) had significantly higher body mass (Mann-Whitney, W = 90, p = 0.01). However, only 4 birds had detections. This result is most likely due to small sample size.
 3. Semipalmated Sandpipers (Mass ~ Neonicotinoid): There were no variables (including neonicotinoid concentrations/detections) that had any significant impact on body mass. 
-4. Calidris sp. (Mass ~ Neonicotinoid): 
+4. Small pipers (Mass ~ Neonicotinoid): Conflicting results across models. Models with neonicotinoid detections suggest that birds with detections had significantly lower body mass. However, when graphing the relationship independently of the model, boxplot shows that birds WITH detections have significantly higher body mass. For both models that used neonicotinoids as a continuous variable (log transformation and no log transformation), model suggests birds with higher neonic concentrations have higher body mass (positive relationship). 
+5. 
 
