@@ -1,0 +1,67 @@
+This file serves as supporting documentation for the two-stage AICc model selection Killdeer body mass analysis. 
+
+Date Created: 2024-10-23
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Data Exploration and Model Assumptions
+
+Data: Killdeer (n = 10)
+
+**Severe violations of normality and homoscedasticity due to extreme outlier. 
+**Solution: Convert concentrations into detections and non-detections.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Analysis: Two-stage AICc Model Selection
+Species: Killdeer
+Response Variable: Mass 
+
+*First Stage Output:
+
+*Model selection based on AICc (shortened):
+
+                   K   AICc Delta_AICc AICcWt Cum.Wt     LL
+m9                 5 114.69       0.00   0.29   0.29 -48.06
+m14                5 114.69       0.00   0.29   0.59 -48.06
+m17                6 117.17       2.48   0.08   0.67 -45.58
+m15                6 117.17       2.48   0.08   0.76 -45.58
+.
+.
+.
+
+*Top Model Summaries:
+
+1. Mass ~ Year + Sex + Julian (m9) <- INFORMED NULL (same model as m14)
+
+            Estimate Std. Error t value Pr(>|t|)   2.5 %   97.5 %
+(Intercept)  162.677    18.1356    8.97 8.77e-06 121.652 203.7031
+Year2023     -24.408     8.3154   -2.94 1.66e-02 -43.219  -5.5976
+SexM         -14.615     8.2332   -1.78 1.10e-01 -33.240   4.0096
+Julian        -0.232     0.0659   -3.52 6.49e-03  -0.381  -0.0831
+
+2. Mass ~ Year * Sex + Julian (m14) (same model as m9)
+
+            Estimate Std. Error t value Pr(>|t|)   2.5 %   97.5 %
+(Intercept)  162.677    18.1356    8.97 8.77e-06 121.652 203.7031
+Year2023     -24.408     8.3154   -2.94 1.66e-02 -43.219  -5.5976
+SexM         -14.615     8.2332   -1.78 1.10e-01 -33.240   4.0096
+Julian        -0.232     0.0659   -3.52 6.49e-03  -0.381  -0.0831
+
+*Conclusion:
+1. Killdeer in 2023 weighed significantly less.
+2. Julian date and mass are negatively correlated (i.e., as date into the season continues, body mass decreases).
+
+--------------------------------------------------------------------------------------------------------------------------
+
+*Second Stage Output (Concentration as Detection)
+
+*Model selection based on AICc (shortened):
+
+                     K AICc Delta_AICc AICcWt Cum.Wt    LL
+m.informednull       5  115       0.00   0.71   0.71 -48.1
+m7                   5  117       2.51   0.20   0.91 -49.3
+m8                   6  121       6.00   0.04   0.95 -47.3
+
+*Conclusion:
+1. Neonicotinoid detection does not have any influence on Killdeer body mass.

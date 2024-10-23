@@ -2080,6 +2080,7 @@ library(effects)
 plot(allEffects(m175))
 
 ## ggplot Visuals ####
+library(ggplot2)
 ggplot(piper, aes(x = Detection, y = Mass)) +
   geom_boxplot() + 
   theme_classic() + 
