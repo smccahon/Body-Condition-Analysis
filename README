@@ -1,0 +1,14 @@
+This file serves as supportive documentation to Shelby McCahon's neonicotinoid body condition analysis. 
+
+Date created: 2024-10-28
+
+-------------------------
+
+Objective: Determine if neonicotinoid concentrations and detections influence shorebird body condition. We are assessing detections (yes or no) as an explanatory variable due to the rapid metabolism of neonicotinoids. 
+
+Body condition response variables: body mass, size corrected body mass, fat, pectoral muscle size, pectoral muscle score, scaled mass index, fattening index (metabolite data)
+
+Explanatory variables of interest: neonicotinoid detection (yes or no), neonicotinoid concentration (ug/L)
+
+Controlling variables: sex, year, Julian date (if non-migratory species), date into migration season (if migratory species), season (spring/fall), species (random effect)
+
