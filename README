@@ -1,14 +1,46 @@
-This file serves as supportive documentation to Shelby McCahon's neonicotinoid body condition analysis. 
+This file serves as supporting documentation to Shelby McCahon's neonicotinoid body condition analysis. 
 
 Date created: 2024-10-28
 
 -------------------------
 
-Objective: Determine if neonicotinoid concentrations and detections influence shorebird body condition. We are assessing detections (yes or no) as an explanatory variable due to the rapid metabolism of neonicotinoids. 
+Objective: Determine if neonicotinoid concentrations/detections influence shorebird body condition. We are assessing detections (yes or no) as an explanatory variable due to the rapid metabolism of neonicotinoids. 
 
-Body condition response variables: body mass, size corrected body mass, fat, pectoral muscle size, pectoral muscle score, scaled mass index, fattening index (metabolite data)
+Response variables: body mass, size corrected body mass, fat, pectoral muscle size, pectoral muscle score, scaled mass index, fattening index (metabolite data)
 
-Explanatory variables of interest: neonicotinoid detection (yes or no), neonicotinoid concentration (ug/L)
+Fixed effects: neonicotinoid detection (yes or no), neonicotinoid concentration (ug/L), log(neonicotinoid concentration), sex, Julian date (if non-migratory species), date into migration season (if migratory species), sampling event (fall 2021, spring 2022, spring 2023, fall 2023)
 
-Controlling variables: sex, year, Julian date (if non-migratory species), date into migration season (if migratory species), season (spring/fall), species (random effect)
+Random effects: species
+
+-------------------------
+
+Conclusions & Overview:
+
+Lesser Yellowlegs (Neonicotinoid Analysis): 
+
+Full Model 1: Mass ~ Sex + Date into Stopover Season + Sampling Event + Neonicotinoids (raw concentrations, log[concentration], or detection [y/n])
+
+Reduced Model 1: Mass ~ Sex + Date into Stopover Season + Sampling Event
+
+Top Null Model: Mass ~ Sampling Event (significant; birds in fall 2023 had significantly less body mass likely due to age)
+
+Top Neonic Model: Mass ~ Detection & Mass ~ Log(Concentration) (within 2 Delta AICc)
+
+Approach: To test the hypothesis that neonicotinoid detections/concentrations influence Lesser Yellowlegs body mass, we compared the full model (full model 1) with the alternative, reduced model (reduced model 1) that did not include neonicotinoids. We performed a likelihood ratio test using the anova() function. 
+
+Conclusion: We found that neonicotinoids (raw concentrations, log[concentration], or detection [y/n]) did not further explain variation in body mass beyond sampling event. 
+
+--------
+
+Lesser Yellowlegs (Agricultural Intensification at Capture Site Analysis):
+
+Full Model 2: Mass ~ Sex + Date into Stopover Season + Sampling Event + % Agriculture Surrounding Capture Site
+
+Reduced Model 2: Mass ~ Sex + Date into Stopover Season + Sampling Event
+
+Approach: To test the hypothesis that agricultural intensification at capture sites influences Lesser Yellowlegs body mass, we compared the full model (full model 2) with the alternative, reduced model (reduced model 2) that did not include % agriculture. We performed a likelihood ratio test using the anova() function.
+
+Conclusion: We found that agricultural intensification did not further explain variation in body mass beyond sampling event. 
+
+-------------------------
 
