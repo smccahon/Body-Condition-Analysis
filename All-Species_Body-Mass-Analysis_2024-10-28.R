@@ -205,15 +205,11 @@ aictab(models, modnames = mod.names)
 
 
 
-
-
-
-
-
 # ---------------------------------------------------------------------------- #
 
 ## Assess interactions: Neonic * Julian ####
 m.detectionjulian <- lmer(Mass ~ Detection*Julian + Sex + Event + (1 | Species), data = birds)
+m.detectionjulian <- lmer(Mass ~ Detection + Julian + Sex + Event + (1 | Species), data = birds)
 summary(m.detectionjulian)
 confint(m.detectionjulian)
 
@@ -263,4 +259,6 @@ confint(m.interact)
 #-------#
 
 # Assess Model Assumptions ####
+
+
 

@@ -442,9 +442,9 @@ Conclusion: Including percent agriculture around capture site does not improve m
 NEED TO DO: ASSESS INTERACTIONS AND MODEL ASSUMPTIONS OF TOP MODELS
 
 
-Assess any biologically relevant interactions (output not shown):
+Assess any biologically relevant interactions:
 
--Julian * Neonicotinoid Detection/Concentration (interaction not significant)
--Sex * Neonicotinoid Detection/Concentration (interaction not significant)
--Sampling Event * Neonicotinoid Detection/Concentration (interaction not significant)
+-Julian * Neonicotinoid Detection/Concentration 
+-Sex * Neonicotinoid Detection/Concentration 
+-Sampling Event * Neonicotinoid Detection/Concentration 
 
