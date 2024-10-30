@@ -1,0 +1,450 @@
+This file serves as supporting documentation to Shelby McCahon's neonicotinoid body mass analysis. 
+
+Date created: 2024-10-29
+
+-------------------------
+
+Species tested (n = 9 species; n = 170 birds with measured neonic concentrations): 
+1. Lesser Yellowlegs (n = 54)
+2. Least Sandpiper (n = 29)
+3. Semipalmated Sandpiper (n = 20)
+4. Wilson's Phalarope (n = 19)
+5. Killdeer (n = 14)
+6. Pectoral Sandpiper (n = 14)
+7. Long-billed Dowitcher (n = 6)
+8. Willet (n = 10)
+9. American Avocet (n = 4)
+
+-------------------------
+
+Reduced Null Model: Mass ~ Sex + Sampling Event + Julian + Species (Random Effect)
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species) + Julian
+   Data: birds
+
+REML criterion at convergence: 1476
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.907 -0.376 -0.040  0.367  4.222 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 9649     98.2    
+ Residual              335     18.3    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                 Estimate Std. Error t value
+(Intercept)      123.8565    43.2072    2.87
+SexM              -5.2683     3.3888   -1.55
+EventFall_2023   -24.5503     5.2638   -4.66
+EventSpring_2022  -8.4619    12.7626   -0.66
+EventSpring_2023 -18.1315    11.0704   -1.64
+Julian             0.0481     0.1385    0.35
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022 ES_2023
+SexM        -0.118                              
+EvntFl_2023  0.287 -0.114                       
+EvntSp_2022 -0.601  0.066 -0.257                
+EvntSp_2023 -0.596  0.099 -0.204  0.891         
+Julian      -0.644  0.116 -0.543  0.891   0.865 
+
+Conclusion: Sampling event is important. Birds in fall 2023 had significantly lower body mass (likely due to age). 
+
+-------------------------
+
+Full Neonicotinoid Detection Model: Mass ~ Sex + Sampling Event + Julian + Species (Random Effect) + Detection
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species) + Julian + Detection
+   Data: birds
+
+REML criterion at convergence: 1471
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.943 -0.368 -0.038  0.354  4.113 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 9679     98.4    
+ Residual              335     18.3    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                       Estimate Std. Error t value
+(Intercept)            120.0446    43.4239    2.76
+SexM                    -5.5105     3.3981   -1.62
+EventFall_2023         -25.0807     5.2922   -4.74
+EventSpring_2022        -5.6195    13.0920   -0.43
+EventSpring_2023       -17.2148    11.1111   -1.55
+Julian                   0.0538     0.1386    0.39
+DetectionNon-detection   3.6747     3.7681    0.98
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022 ES_2023 Julian
+SexM        -0.110                                     
+EvntFl_2023  0.293 -0.106                              
+EvntSp_2022 -0.603  0.048 -0.272                       
+EvntSp_2023 -0.599  0.092 -0.211  0.885                
+Julian      -0.644  0.112 -0.544  0.877   0.865        
+DtctnNn-dtc -0.090 -0.073 -0.103  0.223   0.085   0.042
+
+                         2.5 %  97.5 %
+.sig01                  61.900 160.248
+.sigma                  16.156  20.135
+(Intercept)             35.084 204.884
+SexM                   -12.075   1.071
+EventFall_2023         -35.318 -14.844
+EventSpring_2022       -30.977  19.674
+EventSpring_2023       -38.714   4.270
+Julian                  -0.215   0.322
+DetectionNon-detection  -3.620  10.958
+
+Conclusion: The effect of neonicotinoid detection on body mass is not significant. Sampling event is the only important predictor.
+
+-------------------------
+
+Compare full and reduced models: Detection
+
+anova(m.reduced, m.detection)
+
+Data: birds
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | Species) + Julian
+m.detection: Mass ~ Sex + Event + (1 | Species) + Julian + Detection
+            npar  AIC  BIC logLik deviance Chisq Df Pr(>Chisq)
+m.reduced      8 1518 1543   -751     1502                    
+m.detection    9 1519 1547   -750     1501  0.98  1       0.32
+
+Conclusion: Neonicotinoid detection does not further explain any variation in body mass.
+
+------------------------
+
+Full Neonicotinoid Concentration Model: Mass ~ Sex + Sampling Event + Julian + Species (Random Effect) + Neonicotinoid Concentration
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species) + Julian + OverallNeonic
+   Data: birds
+
+REML criterion at convergence: 1482
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.896 -0.359 -0.036  0.356  4.206 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 9654     98.3    
+ Residual              337     18.4    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                  Estimate Std. Error t value
+(Intercept)      122.76765   43.31313    2.83
+SexM              -5.51525    3.43215   -1.61
+EventFall_2023   -24.49133    5.27779   -4.64
+EventSpring_2022  -7.64211   12.89651   -0.59
+EventSpring_2023 -17.76135   11.12136   -1.60
+Julian             0.05445    0.13938    0.39
+OverallNeonic     -0.00956    0.01895   -0.50
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022 ES_2023 Julian
+SexM        -0.110                                     
+EvntFl_2023  0.286 -0.116                              
+EvntSp_2022 -0.603  0.046 -0.252                       
+EvntSp_2023 -0.598  0.088 -0.202  0.891                
+Julian      -0.646  0.101 -0.538  0.892   0.865        
+OverallNenc  0.050  0.143 -0.022 -0.126  -0.066  -0.090
+
+                    2.5 %   97.5 %
+.sig01            61.8207 160.0456
+.sigma            16.1941  20.1819
+(Intercept)       38.0184 207.4084
+SexM             -12.1460   1.1323
+EventFall_2023   -34.7017 -14.2838
+EventSpring_2022 -32.6182  17.2761
+EventSpring_2023 -39.2800   3.7445
+Julian            -0.2155   0.3238
+OverallNeonic     -0.0462   0.0271
+
+Conclusion: The effect of neonicotinoid concentration on body mass is not significant.
+
+------------------------
+
+Compare full and reduced models: Concentration
+
+anova(m.reduced, m.conc)
+
+Data: birds
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | Species) + Julian
+m.conc: Mass ~ Sex + Event + (1 | Species) + Julian + OverallNeonic
+          npar  AIC  BIC logLik deviance Chisq Df Pr(>Chisq)
+m.reduced    8 1518 1543   -751     1502                    
+m.conc       9 1519 1548   -751     1501  0.26  1       0.61
+
+Conclusion: Neonicotinoid concentration does not further explain any variation in body mass.
+
+------------------------
+
+Full Log(Concentration) Model: Mass ~ Log(Concentration) + Sex + Sampling Event + Species (Random Effect) + Julian
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species) + Julian + LogNeonic
+   Data: birds
+
+REML criterion at convergence: 1474
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.939 -0.342 -0.039  0.367  4.115 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 9664     98.3    
+ Residual              335     18.3    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                 Estimate Std. Error t value
+(Intercept)      119.5151    43.4448    2.75
+SexM              -5.5760     3.4026   -1.64
+EventFall_2023   -24.9839     5.2815   -4.73
+EventSpring_2022  -4.8206    13.2728   -0.36
+EventSpring_2023 -16.9682    11.1311   -1.52
+Julian             0.0562     0.1387    0.40
+LogNeonic         -0.9022     0.9035   -1.00
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022 ES_2023 Julian
+SexM        -0.108                                     
+EvntFl_2023  0.293 -0.106                              
+EvntSp_2022 -0.602  0.038 -0.269                       
+EvntSp_2023 -0.600  0.088 -0.211  0.881                
+Julian      -0.645  0.110 -0.545  0.871   0.865        
+LogNeonic    0.100  0.091  0.082 -0.275  -0.105  -0.058
+
+                   2.5 %  97.5 %
+.sig01            61.854 160.126
+.sigma            16.155  20.133
+(Intercept)       34.529 204.388
+SexM             -12.150   1.014
+EventFall_2023   -35.201 -14.769
+EventSpring_2022 -30.526  20.824
+EventSpring_2023 -38.506   4.556
+Julian            -0.212   0.324
+LogNeonic         -2.649   0.846
+
+Conclusion: The effect of log(concentration) on body mass is not significant.
+
+------------------------
+
+Compare full and reduced models: Log(Concentration)
+
+anova(m.reduced, m.log)
+
+Data: birds
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | Species) + Julian
+m.log: Mass ~ Sex + Event + (1 | Species) + Julian + LogNeonic
+          npar  AIC  BIC logLik deviance Chisq Df Pr(>Chisq)
+m.reduced    8 1518 1543   -751     1502                    
+m.log        9 1519 1547   -750     1501  1.03  1       0.31
+
+Conclusion: Log(concentration) does not further explain any variation in body mass.
+
+------------------------
+
+Identify best reduced model (with species as a random effect)
+
+m.sex <- lmer(Mass ~ Sex + (1 | Species), data = birds, REML = FALSE)
+m.julian <- lmer(Mass ~ Julian + (1 | Species), data = birds, REML = FALSE)
+m.event <- lmer(Mass ~ Event + (1 | Species), data = birds, REML = FALSE)
+m.sexjulian <- lmer(Mass ~ Sex + Julian + (1 | Species), data = birds, REML = FALSE)
+m.sexevent <- lmer(Mass ~ Sex + Event + (1 | Species), data = birds, REML = FALSE)
+m.julianevent <- lmer(Mass ~ Julian + Event + (1 | Species), data = birds, REML = FALSE)
+m.sexjulianevent <- lmer(Mass ~ Julian + Sex + Event + (1 | Species), data = birds, REML = FALSE)
+
+AICc model selection:
+
+Model selection based on AICc:
+
+                 K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.sexevent       7 1517       0.00   0.73   0.73 -751
+m.sexjulianevent 8 1519       2.08   0.26   0.99 -751
+m.event          6 1526       9.16   0.01   1.00 -757
+m.julianevent    7 1528      11.00   0.00   1.00 -756
+m.sex            4 1539      22.70   0.00   1.00 -765
+m.sexjulian      5 1540      23.48   0.00   1.00 -765
+m.julian         4 1549      32.15   0.00   1.00 -770
+
+------
+
+Top Model Summary: Mass ~ Sex + Event + (1 | Species)
+
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species)
+   Data: birds
+
+     AIC      BIC   logLik deviance df.resid 
+    1516     1538     -751     1502      161 
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.995 -0.374 -0.037  0.375  4.308 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 8553     92.5    
+ Residual              325     18.0    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                 Estimate Std. Error t value
+(Intercept)        133.51      31.16    4.28
+SexM                -5.40       3.31   -1.63
+EventFall_2023     -23.56       4.35   -5.41
+EventSpring_2022   -12.42       5.71   -2.18
+EventSpring_2023   -21.45       5.47   -3.92
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022
+SexM        -0.060                      
+EvntFl_2023 -0.101 -0.062               
+EvntSp_2022 -0.083 -0.082  0.592        
+EvntSp_2023 -0.107 -0.002  0.628  0.530 
+
+                 2.5 % 97.5 %
+.sig01            61.8 159.86
+.sigma            16.2  20.21
+(Intercept)       65.6 201.61
+SexM             -11.9   1.14
+EventFall_2023   -32.2 -14.98
+EventSpring_2022 -23.7  -1.16
+EventSpring_2023 -32.2 -10.66
+
+Conclusion: The effect of sampling event on body mass is significant. The effect of sex on body mass is not significant. 
+
+------------------------
+
+Identify best neonicotinoid model (with species as a random effect)
+
+m.detection <- lmer(Mass ~ Detection + (1| Species), data = birds, REML = FALSE)
+m.conc <- lmer(Mass ~ OverallNeonic + (1 | Species), data = birds, REML = FALSE)
+m.log <- lmer(Mass ~ LogNeonic + (1 | Species), data = birds, REML = FALSE)
+
+AICc Model Selection:
+
+Model selection based on AICc:
+
+            K AICc Delta_AICc AICcWt Cum.Wt   LL
+m.conc      4 1550       0.00   0.35   0.35 -771
+m.detection 4 1550       0.11   0.33   0.67 -771
+m.log       4 1550       0.12   0.33   1.00 -771
+
+Conclusion: All models perform similarly. 
+
+------------------------
+
+Agricultural Intensity Model 
+
+m.fullnullag <- lmer(Mass ~ Sex + Event + Julian + (1 | Species), data = birds)
+m.bestnullag <- lmer(Mass ~ Sex + Event + (1 | Species), data = birds)
+
+anova(m.fullnullag, m.bestnullag) 
+
+Data: birds
+Models:
+m.bestnullag: Mass ~ Sex + Event + (1 | Species)
+m.fullnullag: Mass ~ Sex + Event + Julian + (1 | Species)
+             npar  AIC  BIC logLik deviance Chisq Df Pr(>Chisq)
+m.bestnullag    7 1516 1538   -751     1502                    
+m.fullnullag    8 1518 1543   -751     1502  0.12  1       0.73
+
+Conclusion: Excluding Julian improves model fit.
+
+------
+
+Compare full and reduced models: Agricultural Intensity 
+
+m.fullag <- lmer(Mass ~ Sex + Event + (1 | Species) + PercentAg, data = birds)
+
+summary(m.fullag)
+confint(m.fullag)
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: Mass ~ Sex + Event + (1 | Species) + PercentAg
+   Data: birds
+
+REML criterion at convergence: 1468
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.956 -0.353 -0.026  0.376  4.267 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Species  (Intercept) 9618     98.1    
+ Residual              335     18.3    
+Number of obs: 168, groups:  Species, 9
+
+Fixed effects:
+                 Estimate Std. Error t value
+(Intercept)        134.73      33.24    4.05
+SexM                -5.64       3.45   -1.63
+EventFall_2023     -23.63       4.43   -5.34
+EventSpring_2022   -12.70       5.87   -2.16
+EventSpring_2023   -21.01       5.75   -3.65
+PercentAg           -2.56       8.29   -0.31
+
+Correlation of Fixed Effects:
+            (Intr) SexM   EF_202 ES_2022 ES_2023
+SexM        -0.082                              
+EvntFl_2023 -0.102 -0.049                       
+EvntSp_2022 -0.097 -0.044  0.592                
+EvntSp_2023 -0.069 -0.059  0.594  0.466         
+PercentAg   -0.117  0.223  0.050  0.159  -0.255 
+
+                 2.5 % 97.5 %
+.sig01            61.7 159.73
+.sigma            16.2  20.20
+(Intercept)       66.5 203.08
+SexM             -12.3   1.07
+EventFall_2023   -32.2 -15.04
+EventSpring_2022 -24.1  -1.31
+EventSpring_2023 -32.1  -9.83
+PercentAg        -18.7  13.50
+
+Conclusion: The effect of surrounding agricultural intensity on body mass is not significant
+
+-----
+
+anova(m.fullag, m.bestnullag)
+
+Data: birds
+Models:
+m.bestnullag: Mass ~ Sex + Event + (1 | Species)
+m.fullag: Mass ~ Sex + Event + (1 | Species) + PercentAg
+             npar  AIC  BIC logLik deviance Chisq Df Pr(>Chisq)
+m.bestnullag    7 1516 1538   -751     1502                    
+m.fullag        8 1518 1543   -751     1502   0.1  1       0.75
+
+Conclusion: Including percent agriculture around capture site does not improve model fit. 
+
+------------------------
+
+
+NEED TO DO: ASSESS INTERACTIONS AND MODEL ASSUMPTIONS OF TOP MODELS
+
+
+Assess any biologically relevant interactions (output not shown):
+
+-Julian * Neonicotinoid Detection/Concentration (interaction not significant)
+-Sex * Neonicotinoid Detection/Concentration (interaction not significant)
+-Sampling Event * Neonicotinoid Detection/Concentration (interaction not significant)
+

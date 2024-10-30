@@ -1,7 +1,7 @@
 #---------------------------------------#
 # Lesser Yellowlegs Body Mass Analysis  #
 #         Created 10/28/2024            #          
-#        Modified 10/28/2024            #
+#        Modified 10/29/2024            #
 #---------------------------------------#
 
 # load packages
@@ -108,7 +108,7 @@ anova(m.null, m.log)
 
 #-------#
 
-### Assess interactions: Neonic * MigDate: LEYE ####
+## Assess interactions: Neonic * MigDate: LEYE ####
 m.interact <- lm(Mass ~ Detection*MigDate + Sex + Event + MigDate, data = leye)
 cbind(summary(m.interact)$coefficients, confint(m.interact))
 
@@ -122,7 +122,7 @@ cbind(summary(m.interact)$coefficients, confint(m.interact))
 
 #-------#
 
-### Assess interactions: Neonic * Sex: LEYE ####
+## Assess interactions: Neonic * Sex: LEYE ####
 m.interact <- lm(Mass ~ Detection*Sex + Sex + Event + MigDate, data = leye)
 cbind(summary(m.interact)$coefficients, confint(m.interact))
 
@@ -136,7 +136,7 @@ cbind(summary(m.interact)$coefficients, confint(m.interact))
 
 #-------#
 
-### Assess interactions: Neonic * Event: LEYE ####
+## Assess interactions: Neonic * Event: LEYE ####
 m.interact <- lm(Mass ~ Detection*Event + Sex + Event + MigDate, data = leye)
 summary(m.interact)$coefficients
 confint(m.interact)
@@ -153,7 +153,7 @@ confint(m.interact)
 
 #-------#
 
-# Agricultural Intensity Model ####
+## Agricultural Intensity Model ####
 m.ag <- lm(Mass ~ Sex + Event + MigDate + PercentAg, data = leye)
 cbind(summary(m.ag)$coefficients, confint(m.ag))
 
@@ -167,7 +167,7 @@ anova(m.null, m.ag)
 
 # ---------------------------------------------------------------------------- #
 
-# Identifying best null model: LEYE ####
+## Identifying best null model: LEYE ####
 m.null <- lm(Mass ~ 1, data = leye)
 m.sex <- lm(Mass ~ Sex, data = leye)
 m.mig <- lm(Mass ~ MigDate, data = leye)
@@ -181,7 +181,7 @@ m.sexmigevent <- lm(Mass ~ MigDate + Sex + Event, data = leye)
 summary(m.event)
 summary(m.log)
 
-## AICc Model Selection: LEYE ####
+### AICc Model Selection: LEYE ####
 models <- list(m.null, m.sex, m.mig, m.event, m.sexmig, m.sexevent, m.migevent,
                m.sexmigevent)
 
@@ -190,19 +190,19 @@ mod.names <- c('m.null', 'm.sex', 'm.mig', 'm.event', 'm.sexmig', 'm.sexevent', 
 
 aictab(models, modnames = mod.names)
 
-# Identify best neonic model: LEYE ####
+## Identify best neonic model: LEYE ####
 m.conc <- lm(Mass ~ OverallNeonic, data = leye)
 m.log <- lm(Mass ~ LogNeonic, data = leye)
 m.detect <- lm(Mass ~ Detection, data = leye)
 
-## AICc Model Selection: LEYE ####
+### AICc Model Selection: LEYE ####
 models <- list(m.null, m.conc, m.log, m.detect)
 
 mod.names <- c('m.null', 'm.conc', 'm.log', 'm.detect')
 
 aictab(models, modnames = mod.names) # DETECTION AND LOG TRANSFORMATION ARE BEST
 
-## Likelihood Ratio Test: LEYE ####
+### Likelihood Ratio Test: LEYE ####
 m.logevent <- lm(Mass ~ LogNeonic + Event, data = leye)
 m.detectevent <- lm(Mass ~ Detection + Event, data = leye)
 anova(m.logevent, m.event)
@@ -216,6 +216,48 @@ anova(m.event, m.log)
 
 # Conclusion: Neonicotinoids do not further inform body mass beyond sampling event.
 # Evidence: AICc Model Selection, beta coefficients, and null-hypothesis significance testing
+
+# ---------------------------------------------------------------------------- #
+
+# Modeling with Random Effects: Mass ~ Neonicotinoids (LEYE) ####
+# Multiple birds were captured on the same date: non-independence
+m.reduced <- lmer(Mass ~ Sex + Event + (1 | MigDate), data = leye)
+summary(m.null)
+
+m.detect <-  lmer(Mass ~ Sex + Event + Detection + (1 | MigDate), data = leye)
+
+# AIC model selection to determine if random effect improves model fit
+m.fixed <- lm(Mass ~ Sex + Event + MigDate, data = leye)
+m.random <- lmer(Mass ~ Sex + Event + (1 | MigDate), data = leye, REML = FALSE)
+
+AIC(m.fixed, m.random)
+
+# Including MigDate as a random variable slightly improves fit
+
+anova(m.random, m.detect)
+
+# Neonicotinoid detections do not further explain variation in body mass
+
+m.conc <- lmer(Mass ~ Sex + Event + (1 | MigDate) + OverallNeonic, data = leye)
+m.log <- lmer(Mass ~ Sex + Event + (1 | MigDate) + LogNeonic, data = leye)
+
+anova(m.conc, m.reduced)
+
+# Neonicotinoid concentrations do not further explain variation in body mass
+
+anova(m.log, m.reduced)
+
+# Log(concentrations) do not further explain variation in body mass
+
+# ---------------------------------------------------------------------------- #
+
+# Modeling with Random Effects: Mass ~ Ag Intensity (LEYE) ####
+m.reduced <- lmer(Mass ~ Sex + Event + (1 | MigDate), data = leye)
+m.full <- lmer(Mass ~ Sex + Event + (1 | MigDate) + PercentAg, data = leye)
+
+anova(m.full, m.reduced)
+
+# Agricultural intensity around capture site does not further explain variation in body size
 
 # ---------------------------------------------------------------------------- #
 

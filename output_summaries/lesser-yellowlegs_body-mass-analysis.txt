@@ -219,6 +219,96 @@ Model 2: Mass ~ Event
 
 -------------------------
 
+Random effect of Date into Migration Season
+
+m.fixed <- lm(Mass ~ Sex + Event + MigDate, data = leye)
+m.random <- lmer(Mass ~ Sex + Event + (1 | MigDate), data = leye, REML = FALSE)
+
+AIC(m.fixed, m.random)
+
+Conclusion: Including date into migration season as a random variable slightly improved model fit.
+
+-------------------------
+
+Modeling with Random Effects: Mass ~ Neonicotinoids
+(Multiple birds were captured on the same date: non-independence)
+
+
+m.null <- Mass ~ Sex + Event + (1 | MigDate)
+m.detect <- Mass ~ Sex + Event + (1 | MigDate) + Detection
+
+anova(m.null, m.detect)
+
+Data: leye
+Models:
+m.null: Mass ~ Sex + Event + (1 | MigDate)
+m.detect: Mass ~ Sex + Event + Detection + (1 | MigDate)
+         npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+m.null      6 437.42 449.35 -212.71   425.42                     
+m.detect    7 439.09 453.01 -212.54   425.09 0.3291  1     0.5662
+
+Conclusion: Detections do not further explain variation in body mass. 
+
+----------
+
+m.conc <- lmer(Mass ~ Sex + Event + (1 | MigDate) + OverallNeonic, data = leye)
+m.log <- lmer(Mass ~ Sex + Event + (1 | MigDate) + LogNeonic, data = leye)
+
+anova(m.conc, m.reduced)
+
+Data: leye
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | MigDate)
+m.conc: Mass ~ Sex + Event + (1 | MigDate) + OverallNeonic
+          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+m.reduced    5 435.87 445.82 -212.94   425.87                     
+m.conc       7 439.38 453.30 -212.69   425.38 0.4968  2       0.78
+
+Conclusion: Concentrations do not further explain variation in body mass.
+
+----------
+
+anova(m.log, m.reduced)
+
+Data: leye
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | MigDate)
+m.log: Mass ~ Sex + Event + (1 | MigDate) + LogNeonic
+          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+m.reduced    5 435.87 445.82 -212.94   425.87                     
+m.log        7 438.89 452.82 -212.45   424.89 0.9801  2     0.6126
+
+Conclusion: Log(concentration) does not further explain variation in body mass.
+
+-------------------------
+
+Modeling with Random Effects: Mass ~ Agricultural Intensity
+
+m.reduced <- Mass ~ Sex + Event + (1 | MigDate)
+m.full <- Mass ~ Sex + Event + (1 | MigDate) + 
+
+Data: leye
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | MigDate)
+m.full: Mass ~ Sex + Event + (1 | MigDate) + PercentAg
+          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+m.reduced    5 435.87 445.82 -212.94   425.87                     
+m.full       7 438.81 452.73 -212.41   424.81 1.0613  2     0.5882
+
+anova(m.full, m.reduced)
+
+Data: leye
+Models:
+m.reduced: Mass ~ Sex + Event + (1 | MigDate)
+m.full: Mass ~ Sex + Event + (1 | MigDate) + PercentAg
+          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+m.reduced    5 435.87 445.82 -212.94   425.87                     
+m.full       7 438.81 452.73 -212.41   424.81 1.0613  2     0.5882
+
+Conclusion: Agricultural intensity around capture site does not further explain variation in body size.
+
+-------------------------
+
 Assess any biologically relevant interactions (output not shown):
 
 -MigDate * Neonicotinoid Detection/Concentration (interaction not significant)
